@@ -1,0 +1,85 @@
+package main
+
+const FCGI_LISTENSOCK_FILENO uint8 = 0
+const FCGI_HEADER_LEN uint8 = 8
+const VERSION_1 uint8 = 1
+const FCGI_NULL_REQUEST_ID uint8 = 0
+
+// Mask for flags component of FCGI_BeginRequestBody
+const FCGI_KEEP_CONN uint8 = 1
+const doubleCRLF = "\r\n\r\n"
+
+// Values for type component of FCGI_Header
+const (
+	FCGI_BEGIN_REQUEST uint8 = iota + 1
+	FCGI_ABORT_REQUEST
+	FCGI_END_REQUEST
+	FCGI_PARAMS
+	FCGI_STDIN
+	FCGI_STDOUT
+	FCGI_STDERR
+	FCGI_DATA
+	FCGI_GET_VALUES
+	FCGI_GET_VALUES_RESULT
+	FCGI_UNKNOWN_TYPE
+	FCGI_MAXTYPE = FCGI_UNKNOWN_TYPE
+)
+
+// Values for role component of FCGI_BeginRequestBody
+const (
+	FCGI_RESPONDER uint8 = iota + 1
+	FCGI_AUTHORIZER
+	FCGI_FILTER
+)
+
+// Values for protocolStatus component of FCGI_EndRequestBody
+const (
+	FCGI_REQUEST_COMPLETE uint8 = iota
+	FCGI_CANT_MPX_CONN
+	FCGI_OVERLOADED
+	FCGI_UNKNOWN_ROLE
+)
+
+// Management Record Types
+const (
+	FCGI_MAX_CONNS  string = "MAX_CONNS"
+	FCGI_MAX_REQS   string = "MAX_REQS"
+	FCGI_MPXS_CONNS string = "MPXS_CONNS"
+)
+
+const (
+	maxWrite = 65500 // 65535 may work, but for compatibility
+	maxPad   = 255
+)
+
+type FCGIClient struct {
+	appServers []string          // remote app server addresses
+	envPairs   map[string]string // current web server env
+	client     *Client
+}
+
+// return a fcgiclient connects to specify servers
+// @validate remoteAddress
+func NewFCGIClient(remoteAddress []string, env map[string]string) (*FCGIClient, error) {
+	client := FCGIClient{envPairs: env, appServers: remoteAddress}
+	return &client, nil
+}
+
+// get the capability of the application  server
+func (fc *FCGIClient) GetAppServerCapability() (map[string]string, error) {
+
+}
+
+// send request to application server and get response
+func (fc *FCGIClient) GetRequest(request *Request) (response *Response, err error) {
+
+}
+
+// call remote servers with specify env
+func (fc *FCGIClient) GetRequestWithEnv(env map[string]string, request *Request) (response *Response, err error) {
+
+}
+
+func (fc *FCGIClient) call(controller string, method string, args interface{}, reply interface{}) error {
+
+}
